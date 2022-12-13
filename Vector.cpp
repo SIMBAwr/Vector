@@ -1,6 +1,39 @@
 #include "Vector.h"
 
 
+
+template<typename T>
+void Vector<T>::clear()
+{
+	delete[] _Ptr;
+	_Ptr = nullptr;
+	_Size = 0;
+	_Capacity = 0;
+}
+
+
+template<typename T>
+void Vector<T>::erase(const int index)
+{
+	T* tempPtr = new T[_Capacity];
+
+	for (size_t i = 0; i < index; i++)
+		tempPtr[i] = _Ptr[i];
+
+	for (size_t i = index + 1; i < _Size; i++)
+		tempPtr[i - 1] = _Ptr[i];
+
+	delete[] _Ptr;
+	_Ptr = new T[_Capacity];
+
+	_Size--;
+
+	for (size_t i = 0; i < _Size; i++)
+		_Ptr[i] = tempPtr[i];
+}
+
+
+
 template<typename T>
 void Vector<T>::insert(size_t _Where, int _Val)
 {
@@ -141,10 +174,9 @@ T& Vector<T>::operator[](size_t index)
 template<typename T>
 Vector<T>::Vector() noexcept
 {
-	_Ptr = new T[1];
-	_Ptr[0] = 0;
+	_Ptr = nullptr;
 	_Size = 0;
-	_Capacity = 1;
+	_Capacity = 0;
 }
 
 
@@ -224,12 +256,7 @@ Vector<T>::Vector(const size_t _Count)
 
 
 template<typename T>
-T* Vector<T>::end() const
+const T* const Vector<T>::end() const
 {
-	//auto en = _Ptr;
-
-	//while (en != _Size)
-	//	en++;
-
 	return &this->_Ptr[_Size];
 }

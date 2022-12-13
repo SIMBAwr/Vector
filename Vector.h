@@ -20,8 +20,8 @@ public:
 	Vector(const size_t _Count);
 	~Vector() { delete[] _Ptr; }
 
-	T* begin() const { return &_Ptr[0]; }
-	T* end() const;
+	const T* const begin() const { return &_Ptr[0]; }
+	const T* const end() const;
 
 	const size_t size() const noexcept { return _Size; };
 	const size_t capacity() const noexcept { return _Capacity; };
@@ -29,9 +29,12 @@ public:
 	void pop_back() noexcept;
 	void shrink_to_fit() noexcept;
 	void insert(size_t _Where, int _Val);
+	void erase(const int index);
+	const T& const back() const { return *end(); }
+	const T& const front() const { return *begin(); }
+	void clear();
+
 
 	T& operator[](size_t index);
 	Vector<T>& operator=(const Vector<T>& _Other);
-
-
 };
